@@ -66,6 +66,7 @@ public class CommandLineOptions implements Options {
     private static final String JETTY_ACCEPT_QUEUE_SIZE = "jetty-accept-queue-size";
     private static final String JETTY_HEADER_BUFFER_SIZE = "jetty-header-buffer-size";
     private static final String ROOT_DIR = "root-dir";
+    private static final String FILES_FOLDER = "files-dir";
     private static final String CONTAINER_THREADS = "container-threads";
 
     private final OptionSet optionSet;
@@ -87,7 +88,8 @@ public class CommandLineOptions implements Options {
         optionParser.accepts(PROXY_VIA, "Specifies a proxy server to use when routing proxy mapped requests").withRequiredArg();
 		optionParser.accepts(RECORD_MAPPINGS, "Enable recording of all (non-admin) requests as mapping files");
 		optionParser.accepts(MATCH_HEADERS, "Enable request header matching when recording through a proxy").withRequiredArg();
-		optionParser.accepts(ROOT_DIR, "Specifies path for storing recordings (parent for " + WireMockServer.MAPPINGS_ROOT + " and " + WireMockServer.FILES_ROOT + " folders)").withRequiredArg().defaultsTo(".");
+		optionParser.accepts(ROOT_DIR, "Specifies path for storing recordings (parent for " + WireMockServer.MAPPINGS_ROOT + " and " + Options.DEFAULT_FILES_FOLDER + " folders)").withRequiredArg().defaultsTo(".");
+        optionParser.accepts(FILES_FOLDER, "Specifies the name of the files folder").withRequiredArg();
 		optionParser.accepts(VERBOSE, "Enable verbose logging to stdout");
 		optionParser.accepts(ENABLE_BROWSER_PROXYING, "Allow wiremock to be set as a browser's proxy server");
         optionParser.accepts(DISABLE_REQUEST_JOURNAL, "Disable the request journal (to avoid heap growth when running wiremock for long periods without reset)");
@@ -258,6 +260,14 @@ public class CommandLineOptions implements Options {
     @Override
     public FileSource filesRoot() {
         return new SingleRootFileSource((String) optionSet.valueOf(ROOT_DIR));
+    }
+
+    @Override
+    public String filesFolder() {
+        if (optionSet.has(FILES_FOLDER)) {
+            return (String) optionSet.valueOf(FILES_FOLDER);
+        }
+        return DEFAULT_FILES_FOLDER;
     }
 
     @Override

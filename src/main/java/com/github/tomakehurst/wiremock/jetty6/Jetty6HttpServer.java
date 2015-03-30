@@ -15,9 +15,6 @@
  */
 package com.github.tomakehurst.wiremock.jetty6;
 
-import java.util.Map;
-
-import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.common.FileSource;
 import com.github.tomakehurst.wiremock.common.HttpsSettings;
 import com.github.tomakehurst.wiremock.common.JettySettings;
@@ -39,13 +36,15 @@ import org.mortbay.jetty.servlet.DefaultServlet;
 import org.mortbay.jetty.servlet.ServletHolder;
 import org.mortbay.thread.QueuedThreadPool;
 
-import static com.github.tomakehurst.wiremock.core.WireMockApp.*;
-import static com.github.tomakehurst.wiremock.jetty6.Jetty6HandlerDispatchingServlet.*;
-import static com.google.common.collect.Maps.*;
+import java.util.Map;
+
+import static com.github.tomakehurst.wiremock.core.WireMockApp.ADMIN_CONTEXT_ROOT;
+import static com.github.tomakehurst.wiremock.jetty6.Jetty6HandlerDispatchingServlet.SHOULD_FORWARD_TO_FILES_CONTEXT;
+import static com.google.common.collect.Maps.newHashMap;
 
 class Jetty6HttpServer implements HttpServer {
 
-    private static final String FILES_URL_MATCH = String.format("/%s/*", WireMockServer.FILES_ROOT);
+    private static final String FILES_URL_MATCH = String.format("/%s/*", Options.DEFAULT_FILES_FOLDER);
 
     private final Server jettyServer;
     private final DelayableSocketConnector httpConnector;

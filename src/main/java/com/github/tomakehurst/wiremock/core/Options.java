@@ -29,6 +29,7 @@ public interface Options {
     public static final int DYNAMIC_PORT = 0;
     public static final int DEFAULT_CONTAINER_THREADS = 200;
     public static final String DEFAULT_BIND_ADDRESS = "0.0.0.0";
+    public static final String DEFAULT_FILES_FOLDER = "__files";
 
     int portNumber();
     HttpsSettings httpsSettings();
@@ -37,6 +38,7 @@ public interface Options {
     boolean browserProxyingEnabled();
     ProxySettings proxyVia();
     FileSource filesRoot();
+    String filesFolder();
     Notifier notifier();
     boolean requestJournalDisabled();
     Optional<Integer> maxRequestJournalEntries();

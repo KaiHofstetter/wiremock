@@ -23,7 +23,6 @@ import com.github.tomakehurst.wiremock.matching.RequestPattern;
 import com.github.tomakehurst.wiremock.stubbing.StubMapping;
 import com.github.tomakehurst.wiremock.stubbing.StubMappings;
 
-import static com.github.tomakehurst.wiremock.WireMockServer.FILES_ROOT;
 import static com.github.tomakehurst.wiremock.WireMockServer.MAPPINGS_ROOT;
 import static com.github.tomakehurst.wiremock.http.RequestMethod.ANY;
 import static java.lang.System.out;
@@ -54,7 +53,7 @@ public class WireMockServerRunner {
 
 		FileSource fileSource = options.filesRoot();
 		fileSource.createIfNecessary();
-		FileSource filesFileSource = fileSource.child(FILES_ROOT);
+		FileSource filesFileSource = fileSource.child(options.filesFolder());
 		filesFileSource.createIfNecessary();
 		FileSource mappingsFileSource = fileSource.child(MAPPINGS_ROOT);
 		mappingsFileSource.createIfNecessary();

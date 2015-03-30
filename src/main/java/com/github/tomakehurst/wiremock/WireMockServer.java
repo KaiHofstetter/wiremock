@@ -52,7 +52,6 @@ import static com.google.common.base.Preconditions.checkState;
 
 public class WireMockServer implements Container, Stubbing, Admin {
 
-	public static final String FILES_ROOT = "__files";
     public static final String MAPPINGS_ROOT = "mappings";
 
 	private final WireMockApp wireMockApp;
@@ -94,7 +93,7 @@ public class WireMockServer implements Container, Stubbing, Admin {
         stubRequestHandler = new StubRequestHandler(
                 wireMockApp,
                 new StubResponseRenderer(
-                        fileSource.child(FILES_ROOT),
+                        fileSource.child(options.filesFolder()),
                         wireMockApp.getGlobalSettingsHolder(),
                         new ProxyResponseRenderer(
                                 options.proxyVia(),

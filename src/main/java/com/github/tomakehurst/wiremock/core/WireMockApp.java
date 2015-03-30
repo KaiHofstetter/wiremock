@@ -38,7 +38,6 @@ import java.util.Map;
 
 public class WireMockApp implements StubServer, Admin {
     
-    public static final String FILES_ROOT = "__files";
     public static final String ADMIN_CONTEXT_ROOT = "/__admin";
 
     private final StubMappings stubMappings;
@@ -113,7 +112,7 @@ public class WireMockApp implements StubServer, Admin {
         ResponseTransformer transformer = transformers.get(0);
         ResponseDefinition newResponseDef =
                 transformer.applyGlobally() || responseDefinition.hasTransformer(transformer) ?
-                transformer.transform(request, responseDefinition, rootFileSource.child(FILES_ROOT)) :
+                transformer.transform(request, responseDefinition, rootFileSource.child(Options.DEFAULT_FILES_FOLDER)) :
                 responseDefinition;
 
         return applyTransformations(request, newResponseDef, transformers.subList(1, transformers.size()));
