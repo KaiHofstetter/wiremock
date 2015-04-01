@@ -45,6 +45,9 @@ Turn on verbose logging to stdout
 ``--root-dir``:
 Sets the root directory, under which ``mappings`` and ``__files`` reside. This defaults to the current directory.
 
+``--files-folder-name``:
+Sets the files folder name, which is in the root-dir. Set to `` if the files are directly in the root directory. This defaults to ``__files``.
+
 ``--record-mappings``:
 Record incoming requests as stub mappings. See :ref:`record-playback`.
 
@@ -104,6 +107,7 @@ When running standalone files placed under the ``__files`` directory will be ser
 except if stub mapping matching the URL exists. For example if a file exists ``__files/things/myfile.html`` and
 no stub mapping will match ``/things/myfile.html`` then hitting ``http://<host>:<port>/things/myfile.html`` will
 serve the file.
+The name of the files folder ``__files`` can be renamed or removed via the ``--files-folder-name`` command line option.
 
 
 Configuring via JSON
