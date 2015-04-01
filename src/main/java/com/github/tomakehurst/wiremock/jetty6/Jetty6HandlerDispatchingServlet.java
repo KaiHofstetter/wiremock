@@ -130,7 +130,7 @@ public class Jetty6HandlerDispatchingServlet extends HttpServlet {
 
     private void forwardToFilesContext(HttpServletRequest httpServletRequest,
             HttpServletResponse httpServletResponse, Request request) throws ServletException, IOException {
-        String forwardUrl = wiremockFileSourceRoot + Options.DEFAULT_FILES_FOLDER + request.getUrl();
+        String forwardUrl = wiremockFileSourceRoot + Options.DEFAULT_FILES_FOLDER_NAME + request.getUrl();
         RequestDispatcher dispatcher = httpServletRequest.getRequestDispatcher(decode(forwardUrl, UTF_8.name()));
         dispatcher.forward(httpServletRequest, httpServletResponse);
     }

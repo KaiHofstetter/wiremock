@@ -259,7 +259,19 @@ public class CommandLineOptionsTest {
         assertThat(extensions.get("one"), instanceOf(Ext1.class));
         assertThat(extensions.get("two"), instanceOf(Ext2.class));
     }
-    
+
+    @Test
+    public void returnsCorrectlyParsedFilesFolderName() {
+        CommandLineOptions options = new CommandLineOptions("--files-folder-name", "myFilesFolder");
+        assertThat(options.filesFolderName(), is("myFilesFolder"));
+    }
+
+    @Test
+    public void returnsDefaultIfFilesFolderNameNotSet() {
+        CommandLineOptions options = new CommandLineOptions();
+        assertThat(options.filesFolderName(), is("__files"));
+    }
+
     public static class Ext1 extends ResponseTransformer {
         @Override
         public ResponseDefinition transform(Request request, ResponseDefinition responseDefinition, FileSource files) { return null; }

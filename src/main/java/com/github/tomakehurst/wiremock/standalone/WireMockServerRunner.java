@@ -53,7 +53,7 @@ public class WireMockServerRunner {
 
 		FileSource fileSource = options.filesRoot();
 		fileSource.createIfNecessary();
-		FileSource filesFileSource = fileSource.child(options.filesFolder());
+		FileSource filesFileSource = fileSource.child(options.filesFolderName());
 		filesFileSource.createIfNecessary();
 		FileSource mappingsFileSource = fileSource.child(MAPPINGS_ROOT);
 		mappingsFileSource.createIfNecessary();

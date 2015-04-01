@@ -93,7 +93,7 @@ public class WireMockServer implements Container, Stubbing, Admin {
         stubRequestHandler = new StubRequestHandler(
                 wireMockApp,
                 new StubResponseRenderer(
-                        fileSource.child(options.filesFolder()),
+                        fileSource.child(options.filesFolderName()),
                         wireMockApp.getGlobalSettingsHolder(),
                         new ProxyResponseRenderer(
                                 options.proxyVia(),

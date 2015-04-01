@@ -49,7 +49,7 @@ public class WireMockConfiguration implements Options {
     private boolean browserProxyingEnabled = false;
     private ProxySettings proxySettings = ProxySettings.NO_PROXY;
     private FileSource filesRoot = new SingleRootFileSource("src/test/resources");
-    private String filesFolder = Options.DEFAULT_FILES_FOLDER;
+    private String filesFolderName = Options.DEFAULT_FILES_FOLDER_NAME;
     private Notifier notifier = new Slf4jNotifier(false);
     private boolean requestJournalDisabled = false;
     private Optional<Integer> maxRequestJournalEntries = Optional.absent();
@@ -166,8 +166,8 @@ public class WireMockConfiguration implements Options {
         return this;
     }
 
-    public WireMockConfiguration filesFolder(String filesFolder) {
-        this.filesFolder = filesFolder;
+    public WireMockConfiguration filesFolderName(String filesFolderName) {
+        this.filesFolderName = filesFolderName;
         return this;
     }
 
@@ -268,8 +268,8 @@ public class WireMockConfiguration implements Options {
     }
 
     @Override
-    public String filesFolder() {
-        return filesFolder;
+    public String filesFolderName() {
+        return filesFolderName;
     }
 
     @Override

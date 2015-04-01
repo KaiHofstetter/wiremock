@@ -112,7 +112,7 @@ public class WireMockApp implements StubServer, Admin {
         ResponseTransformer transformer = transformers.get(0);
         ResponseDefinition newResponseDef =
                 transformer.applyGlobally() || responseDefinition.hasTransformer(transformer) ?
-                transformer.transform(request, responseDefinition, rootFileSource.child(Options.DEFAULT_FILES_FOLDER)) :
+                transformer.transform(request, responseDefinition, rootFileSource.child(Options.DEFAULT_FILES_FOLDER_NAME)) :
                 responseDefinition;
 
         return applyTransformations(request, newResponseDef, transformers.subList(1, transformers.size()));
