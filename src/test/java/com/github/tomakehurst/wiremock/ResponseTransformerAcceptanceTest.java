@@ -134,6 +134,36 @@ public class ResponseTransformerAcceptanceTest {
         assertThat(response.content(), is("Some example test from a file"));
     }
 
+    @Test
+    public void supportsAccessingTheFilesWithNoFilesDirName() {
+        wm = new WireMockServer(wireMockConfig()
+                .dynamicPort()
+                .filesDirectoryName("")
+                .extensions(new FileAccessTransformer("another-plain-example.txt")));
+        wm.start();
+        client = new WireMockTestClient(wm.port());
+
+        createStub("/files-access-transform");
+
+        WireMockResponse response = client.get("/files-access-transform");
+        assertThat(response.content(), is("Another example test from a file"));
+    }
+
+    @Test
+    public void supportsAccessingTheFilesWithChangedFilesDirName() {
+        wm = new WireMockServer(wireMockConfig()
+                .dynamicPort()
+                .filesDirectoryName("__alternative_files")
+                .extensions(new FileAccessTransformer("alternative-plain-example.txt")));
+        wm.start();
+        client = new WireMockTestClient(wm.port());
+
+        createStub("/files-access-transform");
+
+        WireMockResponse response = client.get("/files-access-transform");
+        assertThat(response.content(), is("Alternative example test from a file"));
+    }
+
     private void startWithExtensions(String... extensions) {
         wm = new WireMockServer(wireMockConfig()
                 .dynamicPort()
@@ -240,11 +270,20 @@ public class ResponseTransformerAcceptanceTest {
     }
 
     public static class FileAccessTransformer extends ResponseTransformer {
+        private final String fileName;
+
+        public FileAccessTransformer(){
+            this("plain-example.txt");
+        }
+
+        public FileAccessTransformer(String fileName){
+            this.fileName = fileName;
+        }
 
         @Override
         public ResponseDefinition transform(Request request, ResponseDefinition responseDefinition, FileSource files) {
             return ResponseDefinitionBuilder.like(responseDefinition).but()
-                    .withBody(files.getBinaryFileNamed("plain-example.txt").readContents()).build();
+                    .withBody(files.getBinaryFileNamed(fileName).readContents()).build();
         }
 
         @Override

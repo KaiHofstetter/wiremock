@@ -112,7 +112,6 @@ public class WireMockApp implements StubServer, Admin {
             return responseDefinition;
         }
 
-        //TODO: Write unit test for changing the 'filesDirectoryName'.
         ResponseTransformer transformer = transformers.get(0);
         ResponseDefinition newResponseDef =
                 transformer.applyGlobally() || responseDefinition.hasTransformer(transformer) ?
