@@ -26,6 +26,7 @@ import org.junit.Test;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static com.github.tomakehurst.wiremock.http.RequestMethod.GET;
 import static com.github.tomakehurst.wiremock.http.RequestMethod.POST;
 import static com.github.tomakehurst.wiremock.testsupport.TestHttpHeader.withHeader;
@@ -149,7 +150,39 @@ public class StubbingAcceptanceTest extends AcceptanceTestBase {
 		
 		assertThat(response.content(), is("Some example test from a file"));
 	}
-	
+
+	@Test
+	public void responseBodyLoadedFromFileWithNoFilesDirName() {
+		setupServer(wireMockConfig().filesDirectoryName(""));
+
+		stubFor(get(urlEqualTo("/my/file")).willReturn(
+				aResponse()
+				.withStatus(200)
+				.withBodyFile("another-plain-example.txt")));
+
+		WireMockResponse response = testClient.get("/my/file");
+
+		assertThat(response.content(), is("Another example test from a file"));
+
+		setupServer();
+	}
+
+	@Test
+	public void responseBodyLoadedFromFileWithChangedFilesDirName() {
+		setupServer(wireMockConfig().filesDirectoryName("__alternative_files"));
+
+		stubFor(get(urlEqualTo("/my/file")).willReturn(
+				aResponse()
+						.withStatus(200)
+						.withBodyFile("alternative-plain-example.txt")));
+
+		WireMockResponse response = testClient.get("/my/file");
+
+		assertThat(response.content(), is("Alternative example test from a file"));
+
+		setupServer();
+	}
+
 	@Test
 	public void matchingOnRequestBodyWithTwoRegexes() {
 		stubFor(put(urlEqualTo("/match/this/body"))
