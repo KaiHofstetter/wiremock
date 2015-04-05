@@ -50,6 +50,7 @@ public class WireMockApp implements StubServer, Admin {
     private final MappingsSaver mappingsSaver;
     private final Map<String, ResponseTransformer> transformers;
     private final FileSource rootFileSource;
+    private final String filesDirectoryName;
 
     public WireMockApp(
             RequestDelayControl requestDelayControl,
@@ -60,6 +61,7 @@ public class WireMockApp implements StubServer, Admin {
             Optional<Integer> maxRequestJournalEntries,
             Map<String, ResponseTransformer> transformers,
             FileSource rootFileSource,
+            String filesDirectoryName,
             Container container) {
         this.requestDelayControl = requestDelayControl;
         this.browserProxyingEnabled = browserProxyingEnabled;
@@ -70,6 +72,7 @@ public class WireMockApp implements StubServer, Admin {
         requestJournal = requestJournalDisabled ? new DisabledRequestJournal() : new InMemoryRequestJournal(maxRequestJournalEntries);
         this.transformers = transformers;
         this.rootFileSource = rootFileSource;
+        this.filesDirectoryName = filesDirectoryName;
         this.container = container;
         loadDefaultMappings();
     }
@@ -109,10 +112,11 @@ public class WireMockApp implements StubServer, Admin {
             return responseDefinition;
         }
 
+        //TODO: Write unit test for changing the 'filesDirectoryName'.
         ResponseTransformer transformer = transformers.get(0);
         ResponseDefinition newResponseDef =
                 transformer.applyGlobally() || responseDefinition.hasTransformer(transformer) ?
-                transformer.transform(request, responseDefinition, rootFileSource.child(Options.DEFAULT_FILES_FOLDER_NAME)) :
+                transformer.transform(request, responseDefinition, rootFileSource.child(filesDirectoryName)) :
                 responseDefinition;
 
         return applyTransformations(request, newResponseDef, transformers.subList(1, transformers.size()));

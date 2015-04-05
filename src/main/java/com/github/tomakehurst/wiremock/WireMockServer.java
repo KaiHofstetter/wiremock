@@ -83,6 +83,7 @@ public class WireMockServer implements Container, Stubbing, Admin {
                 options.maxRequestJournalEntries(),
                 options.extensionsOfType(ResponseTransformer.class),
                 fileSource,
+                options.filesDirectoryName(),
                 this
         );
 
@@ -93,7 +94,7 @@ public class WireMockServer implements Container, Stubbing, Admin {
         stubRequestHandler = new StubRequestHandler(
                 wireMockApp,
                 new StubResponseRenderer(
-                        fileSource.child(options.filesFolderName()),
+                        fileSource.child(options.filesDirectoryName()),
                         wireMockApp.getGlobalSettingsHolder(),
                         new ProxyResponseRenderer(
                                 options.proxyVia(),

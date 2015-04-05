@@ -44,7 +44,7 @@ import static com.google.common.collect.Maps.newHashMap;
 
 class Jetty6HttpServer implements HttpServer {
 
-    private static final String FILES_URL_MATCH = String.format("/%s/*", Options.DEFAULT_FILES_FOLDER_NAME);
+    private static final String FILES_URL_MATCH = String.format("/%s/*", Options.DEFAULT_FILES_DIR_NAME);
 
     private final Server jettyServer;
     private final DelayableSocketConnector httpConnector;

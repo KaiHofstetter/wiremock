@@ -17,7 +17,6 @@ package com.github.tomakehurst.wiremock.jetty6;
 
 import com.github.tomakehurst.wiremock.common.LocalNotifier;
 import com.github.tomakehurst.wiremock.common.Notifier;
-import com.github.tomakehurst.wiremock.core.Options;
 import com.github.tomakehurst.wiremock.http.HttpHeader;
 import com.github.tomakehurst.wiremock.http.Request;
 import com.github.tomakehurst.wiremock.http.RequestHandler;
@@ -40,7 +39,8 @@ public class Jetty6HandlerDispatchingServlet extends HttpServlet {
 	public static final String MAPPED_UNDER_KEY = "mappedUnder";
 
 	private static final long serialVersionUID = -6602042274260495538L;
-	
+	private static final String FILES_DIR_NAME = "__files";
+
 	private RequestHandler requestHandler;
 	private String mappedUnder;
 	private Notifier notifier;
@@ -130,7 +130,7 @@ public class Jetty6HandlerDispatchingServlet extends HttpServlet {
 
     private void forwardToFilesContext(HttpServletRequest httpServletRequest,
             HttpServletResponse httpServletResponse, Request request) throws ServletException, IOException {
-        String forwardUrl = wiremockFileSourceRoot + Options.DEFAULT_FILES_FOLDER_NAME + request.getUrl();
+        String forwardUrl = wiremockFileSourceRoot + FILES_DIR_NAME + request.getUrl();
         RequestDispatcher dispatcher = httpServletRequest.getRequestDispatcher(decode(forwardUrl, UTF_8.name()));
         dispatcher.forward(httpServletRequest, httpServletResponse);
     }

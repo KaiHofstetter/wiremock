@@ -262,14 +262,14 @@ public class CommandLineOptionsTest {
 
     @Test
     public void returnsCorrectlyParsedFilesFolderName() {
-        CommandLineOptions options = new CommandLineOptions("--files-folder-name", "myFilesFolder");
-        assertThat(options.filesFolderName(), is("myFilesFolder"));
+        CommandLineOptions options = new CommandLineOptions("--files-dir-name", "myFilesDir");
+        assertThat(options.filesDirectoryName(), is("myFilesDir"));
     }
 
     @Test
     public void returnsDefaultIfFilesFolderNameNotSet() {
         CommandLineOptions options = new CommandLineOptions();
-        assertThat(options.filesFolderName(), is("__files"));
+        assertThat(options.filesDirectoryName(), is("__files"));
     }
 
     public static class Ext1 extends ResponseTransformer {

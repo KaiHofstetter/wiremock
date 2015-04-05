@@ -66,7 +66,7 @@ public class CommandLineOptions implements Options {
     private static final String JETTY_ACCEPT_QUEUE_SIZE = "jetty-accept-queue-size";
     private static final String JETTY_HEADER_BUFFER_SIZE = "jetty-header-buffer-size";
     private static final String ROOT_DIR = "root-dir";
-    private static final String FILES_FOLDER_NAME = "files-folder-name";
+    private static final String FILES_DIR_NAME = "files-dir-name";
     private static final String CONTAINER_THREADS = "container-threads";
 
     private final OptionSet optionSet;
@@ -88,8 +88,8 @@ public class CommandLineOptions implements Options {
         optionParser.accepts(PROXY_VIA, "Specifies a proxy server to use when routing proxy mapped requests").withRequiredArg();
 		optionParser.accepts(RECORD_MAPPINGS, "Enable recording of all (non-admin) requests as mapping files");
 		optionParser.accepts(MATCH_HEADERS, "Enable request header matching when recording through a proxy").withRequiredArg();
-		optionParser.accepts(ROOT_DIR, "Specifies path for storing recordings (parent for " + WireMockServer.MAPPINGS_ROOT + " and " + Options.DEFAULT_FILES_FOLDER_NAME + " folders)").withRequiredArg().defaultsTo(".");
-        optionParser.accepts(FILES_FOLDER_NAME, "Specifies the name of the files folder (child of the root dir)").withRequiredArg();
+		optionParser.accepts(ROOT_DIR, "Specifies path for storing recordings (parent for " + WireMockServer.MAPPINGS_ROOT + " and " + Options.DEFAULT_FILES_DIR_NAME + " folders)").withRequiredArg().defaultsTo(".");
+        optionParser.accepts(FILES_DIR_NAME, "Specifies the name of the files directory (child of the root directory)").withRequiredArg();
 		optionParser.accepts(VERBOSE, "Enable verbose logging to stdout");
 		optionParser.accepts(ENABLE_BROWSER_PROXYING, "Allow wiremock to be set as a browser's proxy server");
         optionParser.accepts(DISABLE_REQUEST_JOURNAL, "Disable the request journal (to avoid heap growth when running wiremock for long periods without reset)");
@@ -263,11 +263,11 @@ public class CommandLineOptions implements Options {
     }
 
     @Override
-    public String filesFolderName() {
-        if (optionSet.has(FILES_FOLDER_NAME)) {
-            return (String) optionSet.valueOf(FILES_FOLDER_NAME);
+    public String filesDirectoryName() {
+        if (optionSet.has(FILES_DIR_NAME)) {
+            return (String) optionSet.valueOf(FILES_DIR_NAME);
         }
-        return DEFAULT_FILES_FOLDER_NAME;
+        return DEFAULT_FILES_DIR_NAME;
     }
 
     @Override
